@@ -82,3 +82,5 @@ venv.bak/
 Thumbs.db
 
 .github/*
+
+myenv/**
