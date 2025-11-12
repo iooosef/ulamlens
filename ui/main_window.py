@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel
 from PyQt5.QtCore import Qt
+from ui.ulam_pages import TakePicturePage, UploadPicturePage
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -7,6 +8,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("UlamLens")
         self.setGeometry(100, 100, 800, 600)
 
+        self.show_main_menu()
+
+    def show_main_menu(self):
         # Central widget and layout
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
@@ -46,6 +50,7 @@ class MainWindow(QMainWindow):
             }
         ''')
         layout.addWidget(self.take_picture_btn)
+        self.take_picture_btn.clicked.connect(self.show_take_picture_page)
 
         # Button: Upload a picture of an ulam
         self.upload_picture_btn = QPushButton("🖼️ Upload a picture of an ulam", self)
@@ -63,6 +68,17 @@ class MainWindow(QMainWindow):
             }
         ''')
         layout.addWidget(self.upload_picture_btn)
+        self.upload_picture_btn.clicked.connect(self.show_upload_picture_page)
 
         # Add stretch to center the buttons
         layout.addStretch()
+
+    def show_take_picture_page(self):
+        self.take_picture_page = TakePicturePage(self)
+        self.setCentralWidget(self.take_picture_page)
+        self.take_picture_page.back_btn.clicked.connect(self.show_main_menu)
+
+    def show_upload_picture_page(self):
+        self.upload_picture_page = UploadPicturePage(self)
+        self.setCentralWidget(self.upload_picture_page)
+        self.upload_picture_page.back_btn.clicked.connect(self.show_main_menu)
